@@ -1,0 +1,15 @@
+h1 {
+	text-align: center;
+}
+.search {
+	text-align: center;
+}
+ul {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+li {
+	list-style: none;
+	width: 25%;
+}

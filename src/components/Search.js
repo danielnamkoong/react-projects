@@ -4,13 +4,13 @@ class Search extends Component {
 	render() {
 		const { handleSubmit, handleChange } = this.props;
 		return (
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className="search">
 				<input 
 					type="text"
 					onChange={handleChange}
 					name="search"
 				/>
-				<button>Submit</button>
+				<button type="submit" value="Search">Submit</button>
 			</form>
 		)
 	}

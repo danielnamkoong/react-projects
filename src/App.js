@@ -1,41 +1,61 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import './App.css';
 import Search from './components/Search';
+import Gif from './components/Gif';
 
 class App extends Component {
-	state={
-		inputValue: '',
+	state={	
 		isLoading: false,
-	}
-
-	componentDidMount = () => {
-		this.handleSubmit();
-		console.log('componentDidMount');
-	}
-
-	handleSubmit = event => {
-		console.log('handleSubmit');
+		inputValue: '',
+		results: [],
 	}
 
 	handleChange = event => {
-		console.log('handleChange');
-		const inputValue = event.target.value;
 		this.setState({
-			inputValue
-		})
-		console.log(inputValue);
-	}
+			inputValue: event.target.value
+		});
+	}	
+
+  handleSubmit = event => {  
+  	event.preventDefault()
+    this.setState({ isLoading: true });
+    const query = this.state.inputValue;
+
+    fetch(`https://api.giphy.com/v1/gifs/search?api_key=8PPSPL45las2U4qYn85VDTGGgvnK34hZ&q=${query}&limit=25&offset=0&rating=G&lang=en`)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong...');
+        }
+      })
+      .then(responseDate => {
+        this.setState({
+          results: responseDate.data,
+          isLoading: false
+        })
+      })
+      .catch(error => this.setState({ error, isLoading: false }));    
+  }
+
+
 
 	render() {
+		const { results, inputValue, isLoading} = this.state;
+
 		return (
 			<div>
 				<h1>Gif search</h1>
 				<Search 
-					handleSubmit={this.handleSubmit}
 					handleChange={this.handleChange}
+					handleSubmit={this.handleSubmit}
+					inputValue={inputValue}
+				/>
+				<Gif
+					results={results}
 				/>
 			</div>
-		)
+		);
 	}
 }
 
