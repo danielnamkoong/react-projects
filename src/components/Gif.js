@@ -6,7 +6,7 @@ class Gif extends Component {
 			<div>
 				<ul>
 					{this.props.results.map(d => 
-						<li key={d.id}>
+						<li key={d.id}> 
 							<iframe src={`https://giphy.com/embed/${d.id}`} />
 						</li>
 					)}
